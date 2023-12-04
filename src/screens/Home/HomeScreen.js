@@ -1,10 +1,14 @@
-import React from "react";
-import { Banner } from "../../components/home/Banner";
+import React from 'react'
+import SpecialityCard from '../../components/home/SpecialityCard'
 
-export const HomeScreen = () => {
+const HomeScreen = () => {
   return (
     <>
-      <Banner />
+        <SpecialityCard color={'red'} imageSource={require('../../../assets/images/home/tooth.png')}/>
+        <SpecialityCard color={'blue'} imageSource={require('../../../assets/images/home/tooth.png')}/>
+        <SpecialityCard color={'green'} imageSource={require('../../../assets/images/home/tooth.png')}/>
     </>
-  );
-};
+  )
+}
+
+export default HomeScreen
