@@ -16,7 +16,7 @@ const SpecialityList = () => {
       renderItem={({ item, index }) => (
         <SpecialityCard color={colors[index % 4]} imageSource={item.image} />
       )}
-      keyExtractor={(item) => item}
+      keyExtractor={(item, index) => String(index)}
     />
   );
 };

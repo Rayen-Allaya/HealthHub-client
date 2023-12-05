@@ -1,6 +1,5 @@
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import React from "react";
-import Card from "../common/basic/Card";
 import PopularDoctorsCard from "./PopularDoctorsCard";
 
 const PopularDoctors = () => {
@@ -11,13 +10,8 @@ const PopularDoctors = () => {
       <FlatList
         data={doctors}
         horizontal
-        renderItem={({ item }) => (
-          <PopularDoctorsCard
-            color={"red"}
-            imageSource={require("../../../assets/images/home/tooth.png")}
-          />
-        )}
-        keyExtractor={(item) => item}
+        renderItem={({ item, index }) => <PopularDoctorsCard />}
+        keyExtractor={(item, index) => String(index)}
       />
     </View>
   );
