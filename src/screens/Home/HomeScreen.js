@@ -1,16 +1,17 @@
-import React from 'react'
-import SpecialityCard from '../../components/home/SpecialityCard'
-import PressableButton from '../../components/common/Button'
+import React from "react";
+import SpecialityList from "../../components/doctorsList/SpecialityList";
+import { ScrollView } from "react-native";
+import PopularDoctors from "../../components/home/PopularDoctors";
+import { Banner } from "../../components/home/Banner";
 
 const HomeScreen = () => {
   return (
-    <>
-        <SpecialityCard color={'red'} imageSource={require('../../../assets/images/home/tooth.png')}/>
-        <SpecialityCard color={'blue'} imageSource={require('../../../assets/images/home/tooth.png')}/>
-        <SpecialityCard color={'green'} imageSource={require('../../../assets/images/home/tooth.png')}/>
-        <PressableButton title={'Malek'} width={120} height={60}/>
-    </>
-  )
-}
+    <ScrollView>
+      <Banner />
+      <SpecialityList />
+      <PopularDoctors />
+    </ScrollView>
+  );
+};
 
-export default HomeScreen
+export default HomeScreen;

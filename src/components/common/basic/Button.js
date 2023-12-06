@@ -1,7 +1,7 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
 
-const Button = ({title, width, height}) => {
+const Button = ({ title, width, height }) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePressIn = () => {
@@ -11,39 +11,38 @@ const Button = ({title, width, height}) => {
     }, 1000);
   };
 
-
   return (
-    <View style={[styles.wrapperCustom, {width: width, height: height}]}>
-      
+    <View style={[styles.wrapperCustom]}>
       <Pressable
         onPressIn={handlePressIn}
         style={({ pressed }) => [
-            pressed && { 
-              opacity: .7
-            },
+          pressed && {
+            opacity: 0.7,
+          },
         ]}
       >
         <Text style={styles.text}>{title}</Text>
       </Pressable>
-
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   wrapperCustom: {
-    padding: 10,
+    paddingVertical: 12,
     borderRadius: 12,
-    backgroundColor: '#0EBE7F',
-    resizeMode : "contain",
-    justifyContent:'center',
-    display: 'flex',
-    alignItems: 'center',
+    backgroundColor: "#0EBE7F",
+    resizeMode: "contain",
+    justifyContent: "center",
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
   },
   text: {
     fontSize: 20,
-    color: 'white'
-  }
+    color: "white",
+    fontWeight: "700",
+  },
 });
 
 export default Button;
