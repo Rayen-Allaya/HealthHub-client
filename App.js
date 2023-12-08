@@ -30,11 +30,6 @@ export default function App() {
           component={DoctorsListScreen}
           options={{ headerRight: SearchButton }}
         />
-        <Drawer.Screen
-          name="Detail Doctors"
-          component={DetailsDoctorScreen}
-          options={{ headerRight: SearchButton }}
-        />
       </Drawer.Navigator>
     );
   }
@@ -47,7 +42,16 @@ export default function App() {
           component={Root}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Search" component={FilterDoctorsScreen} />
+        <Stack.Screen
+          name="FilterDoctorsScreen"
+          options={{ title: "Search" }}
+          component={FilterDoctorsScreen}
+        />
+        <Stack.Screen
+          name="DoctorsDetails"
+          options={{ title: "Doctor's Details" }}
+          component={DetailsDoctorScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
