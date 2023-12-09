@@ -12,33 +12,8 @@ const DetailsDoctorScreen = () => {
   return (
     <ScrollView>
       <DoctorCard />
-      <View style={styles.view}>
-        <Text style={styles.title1}>Reviews</Text>
-        {reviews.map((review, id) => {
-          return (
-            <View
-              key={id}
-              style={[
-                styles.reviewContainer,
-                {
-                  borderBottomWidth: id == reviews.length - 1 ? 0 : 1,
-                },
-              ]}
-            >
-              <Text style={styles.paragraph}>
-                {review.content.substring(0, 80)}
-                {review.content.length > 80 && "..."}
-              </Text>
-            </View>
-          );
-        })}
-        <View style={[]}>
-          <Text style={styles.seeMore}>See More <Icon name="chevron-right" /> </Text>
-        </View>
-        <Button title={"Next availability "} />
-      </View>
       <View style={styles.Container}>
-        <View style={[styles.Location]}>
+        <View>
           <Text style={[styles.title2]}>Location</Text>
         </View>
         <Pressable
@@ -76,6 +51,35 @@ const DetailsDoctorScreen = () => {
           </MapView>
         </Pressable>
       </View>
+      <View style={{marginLeft:30,marginRight:30,}}>
+        <Button title={"Next availability"}/>
+      </View>
+      <View style={styles.view}>
+        <Text style={styles.title1}>Reviews</Text>
+        {reviews.map((review, id) => {
+          return (
+            <View
+              key={id}
+              style={[
+                styles.reviewContainer,
+                {
+                  borderBottomWidth: id == reviews.length - 1 ? 0 : 1,
+                },
+              ]}
+            >
+              <Text style={styles.paragraph}>
+                {review.content.substring(0, 80)}
+                {review.content.length > 80 && "..."}
+              </Text>
+            </View>
+          );
+        })}
+        <View style={[]}>
+          <Text style={styles.seeMore}>See More <Icon name="chevron-right" /> </Text>
+        </View>
+        
+      </View>
+      
     </ScrollView>
   );
 };
@@ -104,9 +108,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
     textDecorationLine: 'underline',
   },
-  Container: {
-    flexDirection: "row",
-  },
+  
   mapPressableContainer: {
     margin: 20,
     height: 200,
@@ -137,6 +139,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title2: {
+    marginTop: 10,
+    marginLeft: 20,
     color: "#1B98D2",
     fontSize: 18,
     fontWeight: "500",
