@@ -5,6 +5,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { OpenMaps } from "../../utils/OpenMaps";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const DetailsDoctorScreen = () => {
   const doctor = { location: { latitude: 36.8936411, longitude: 10.1857502 } };
@@ -32,7 +33,7 @@ const DetailsDoctorScreen = () => {
           );
         })}
         <View style={[]}>
-          <Text style={styles.seeMore}>See More...</Text>
+          <Text style={styles.seeMore}>See More <Icon name="chevron-right" /> </Text>
         </View>
         <Button title={"Next availability "} />
       </View>
@@ -99,9 +100,9 @@ const styles = StyleSheet.create({
   },
   seeMore: {
     fontSize: 15,
-    fontWeight: "bold",
     paddingBottom: 25,
     textAlign: "right",
+    textDecorationLine: 'underline',
   },
   Container: {
     flexDirection: "row",
