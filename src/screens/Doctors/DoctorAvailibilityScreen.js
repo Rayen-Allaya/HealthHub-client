@@ -4,6 +4,8 @@ import Card from "../../components/common/basic/Card";
 import moment from "moment";
 import { Calendar } from "react-native-calendars";
 import Icon from "react-native-vector-icons/FontAwesome";
+import Input from "../../components/common/basic/Input";
+import Button from "../../components/common/basic/Button";
 
 const constructCalendarMonth = (d) => {
   const days = [];
@@ -85,14 +87,26 @@ const DoctorAvailibilityScreen = () => {
         </View>
       </Card>
       <View style={styles.timeCard}>
-        <Text>Available Times</Text>
+        <Text style={styles.availibleTimeTitle}>Available Times</Text>
         <FlatList
           data={availableTimes}
-          renderItem={(item) => (
-            <Text style={[styles.availableTimeBubble]}>{item}</Text>
-          )}
+          horizontal
+          renderItem={(availibleTime) => {
+            return (
+              <View style={[styles.availableTimeBubble]}>
+                <Text style={[styles.availableTimeBubbleText]}>
+                  {availibleTime.item}
+                </Text>
+              </View>
+            );
+          }}
           keyExtractor={(item, index) => String(index)}
         />
+        <Input
+          style={styles.descriptionInput}
+          placeholder="Add Description..."
+        />
+        <Button title={"Submit"} />
       </View>
     </>
   );
@@ -166,6 +180,7 @@ const styles = StyleSheet.create({
   },
   currentDayOfMonth: {
     color: "#0EBE7F",
+    fontWeight: "600",
   },
   dayOfMonth: {
     width: "14.2857%",
@@ -186,8 +201,32 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
     elevation: 6,
+    padding: 10,
   },
-  availableTimeBubble: {},
+  availibleTimeTitle: {
+    marginTop: 10,
+    marginLeft: 10,
+    fontSize: 18,
+    fontWeight: "700",
+  },
+  availableTimeBubble: {
+    marginHorizontal: 5,
+    marginTop: 20,
+    backgroundColor: "#0EBE7F",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+  },
+  availableTimeBubbleText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  descriptionInput: {
+    marginVertical: 10,
+  },
 });
 
 export default DoctorAvailibilityScreen;

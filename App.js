@@ -22,10 +22,6 @@ export default function App() {
         }}
       >
         <Drawer.Screen
-          name="Schedule Appointment"
-          component={DoctorAvailibilityScreen}
-        />
-        <Drawer.Screen
           options={options.homeScreen}
           name="Home"
           component={HomeScreen}
@@ -56,6 +52,10 @@ export default function App() {
           name="DoctorsDetails"
           options={{ title: "Doctor's Details" }}
           component={DetailsDoctorScreen}
+        />
+        <Drawer.Screen
+          name="Schedule Appointment"
+          component={DoctorAvailibilityScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
