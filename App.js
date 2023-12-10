@@ -8,6 +8,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import FilterDoctorsScreen from "./src/screens/Doctors/FilterDoctorsScreen";
 import DetailsDoctorScreen from "./src/screens/Doctors/DetailsDoctorScreen";
 import DoctorAvailibilityScreen from "./src/screens/Doctors/DoctorAvailibilityScreen";
+import SignUp from "./src/screens/Sign/SignUp";
+import SignIn from "./src/screens/Sign/SignIn";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -31,6 +33,8 @@ export default function App() {
           component={DoctorsListScreen}
           options={{ headerRight: SearchButton }}
         />
+        <Drawer.Screen name="SignUp" component={SignUp} />
+        <Drawer.Screen name="SignIn" component={SignIn} />
       </Drawer.Navigator>
     );
   }

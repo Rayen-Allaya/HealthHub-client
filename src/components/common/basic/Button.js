@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     display: "flex",
     alignItems: "center",
-    width: "100%",
   },
   text: {
     fontSize: 20,
