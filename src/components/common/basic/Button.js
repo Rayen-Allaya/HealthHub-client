@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 
-const Button = ({ title, width, height, onPress }) => {
+const Button = ({ title, width, height, onPress, style }) => {
   return (
     <Pressable
       onPress={onPress}
@@ -12,6 +12,8 @@ const Button = ({ title, width, height, onPress }) => {
           },
         ],
         styles.wrapperCustom,
+        { width: width },
+        style,
       ]}
     >
       <Text style={styles.text}>{title}</Text>

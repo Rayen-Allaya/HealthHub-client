@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 const DoctorCard = () => {
   const navigation = useNavigation();
   const bookNow = () => {
-    navigation.navigate("ScheduleAppointment");
+    navigation.navigate("Schedule Appointment");
   };
   const cardClickHandler = () => {
     navigation.navigate("DoctorsDetails");

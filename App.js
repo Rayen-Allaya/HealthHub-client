@@ -34,8 +34,16 @@ export default function App() {
           component={DoctorsListScreen}
           options={{ headerRight: SearchButton }}
         />
-        <Drawer.Screen name="SignUp" component={SignUp} />
-        <Drawer.Screen name="SignIn" component={SignIn} />
+        <Drawer.Screen
+          name="Login"
+          component={SignIn}
+          options={options.authOptions}
+        />
+        <Drawer.Screen
+          name="Register"
+          component={SignUp}
+          options={options.authOptions}
+        />
       </Drawer.Navigator>
     );
   }
@@ -59,7 +67,7 @@ export default function App() {
           component={DetailsDoctorScreen}
         />
         <Stack.Screen
-          name="ScheduleAppointment"
+          name="Schedule Appointment"
           component={DoctorAvailibilityScreen}
         />
         <Stack.Screen name="Reviews" component={ReviewsScreen} />
@@ -74,6 +82,14 @@ const options = {
     headerTitleStyle: { opacity: 0 },
     headerStyle: {
       backgroundColor: "#0EBE7F",
+      elevation: 0,
+      shadowOpacity: 0,
+    },
+  },
+  authOptions: {
+    headerTitleStyle: { opacity: 0 },
+    headerStyle: {
+      backgroundColor: "transparent",
       elevation: 0,
       shadowOpacity: 0,
     },
