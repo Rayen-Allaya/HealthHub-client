@@ -6,6 +6,7 @@ import { DoctorsListScreen } from "./src/screens/Doctors/DoctorsListScreen";
 import SearchButton from "./src/components/doctorsList/SearchButton";
 import { createStackNavigator } from "@react-navigation/stack";
 import FilterDoctorsScreen from "./src/screens/Doctors/FilterDoctorsScreen";
+import ReviewsScreen from "./src/screens/Doctors/ReviewsScreen";
 import DetailsDoctorScreen from "./src/screens/Doctors/DetailsDoctorScreen";
 import DoctorAvailibilityScreen from "./src/screens/Doctors/DoctorAvailibilityScreen";
 import SignUp from "./src/screens/Sign/SignUp";
@@ -57,10 +58,12 @@ export default function App() {
           options={{ title: "Doctor's Details" }}
           component={DetailsDoctorScreen}
         />
-        <Drawer.Screen
-          name="Schedule Appointment"
+        <Stack.Screen
+          name="ScheduleAppointment"
           component={DoctorAvailibilityScreen}
         />
+        <Stack.Screen name="Reviews" component={ReviewsScreen} />
+        <Stack.Screen name="Doctor Details" component={DetailsDoctorScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
