@@ -40,26 +40,25 @@ export default function App() {
   }
 
   return (
-    <Text>hello</Text>
-    // <NavigationContainer>
-    //   <Stack.Navigator>
-    //     <Stack.Screen
-    //       name="Root"
-    //       component={Root}
-    //       options={{ headerShown: false }}
-    //     />
-    //     <Stack.Screen
-    //       name="FilterDoctorsScreen"
-    //       options={{ title: "Search" }}
-    //       component={FilterDoctorsScreen}
-    //     />
-    //     <Stack.Screen
-    //       name="DoctorsDetails"
-    //       options={{ title: "Doctor's Details" }}
-    //       component={DetailsDoctorScreen}
-    //     />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Root"
+          component={Root}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FilterDoctorsScreen"
+          options={{ title: "Search" }}
+          component={FilterDoctorsScreen}
+        />
+        <Stack.Screen
+          name="DoctorsDetails"
+          options={{ title: "Doctor's Details" }}
+          component={DetailsDoctorScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
