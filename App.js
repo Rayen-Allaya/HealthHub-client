@@ -7,6 +7,7 @@ import SearchButton from "./src/components/doctorsList/SearchButton";
 import { createStackNavigator } from "@react-navigation/stack";
 import FilterDoctorsScreen from "./src/screens/Doctors/FilterDoctorsScreen";
 import DetailsDoctorScreen from "./src/screens/Doctors/DetailsDoctorScreen";
+import DoctorAvailibilityScreen from "./src/screens/Doctors/DoctorAvailibilityScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -20,6 +21,10 @@ export default function App() {
           drawerActiveTintColor: "#0EBE7F",
         }}
       >
+        <Drawer.Screen
+          name="Schedule Appointment"
+          component={DoctorAvailibilityScreen}
+        />
         <Drawer.Screen
           options={options.homeScreen}
           name="Home"
@@ -35,25 +40,26 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Root"
-          component={Root}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="FilterDoctorsScreen"
-          options={{ title: "Search" }}
-          component={FilterDoctorsScreen}
-        />
-        <Stack.Screen
-          name="DoctorsDetails"
-          options={{ title: "Doctor's Details" }}
-          component={DetailsDoctorScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Text>hello</Text>
+    // <NavigationContainer>
+    //   <Stack.Navigator>
+    //     <Stack.Screen
+    //       name="Root"
+    //       component={Root}
+    //       options={{ headerShown: false }}
+    //     />
+    //     <Stack.Screen
+    //       name="FilterDoctorsScreen"
+    //       options={{ title: "Search" }}
+    //       component={FilterDoctorsScreen}
+    //     />
+    //     <Stack.Screen
+    //       name="DoctorsDetails"
+    //       options={{ title: "Doctor's Details" }}
+    //       component={DetailsDoctorScreen}
+    //     />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
   );
 }
 
