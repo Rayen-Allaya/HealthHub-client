@@ -6,6 +6,7 @@ import { DoctorsListScreen } from "./src/screens/Doctors/DoctorsListScreen";
 import SearchButton from "./src/components/doctorsList/SearchButton";
 import { createStackNavigator } from "@react-navigation/stack";
 import FilterDoctorsScreen from "./src/screens/Doctors/FilterDoctorsScreen";
+import ReviewsScreen from "./src/screens/Doctors/ReviewsScreen";
 import DetailsDoctorScreen from "./src/screens/Doctors/DetailsDoctorScreen";
 
 const Drawer = createDrawerNavigator();
@@ -31,9 +32,12 @@ export default function App() {
           options={{ headerRight: SearchButton }}
         />
         <Drawer.Screen
-          name="Detail Doctors"
+          name="Reviews"
+          component={ReviewsScreen}
+        />
+        <Drawer.Screen
+          name="Doctor Details"
           component={DetailsDoctorScreen}
-          options={{ headerRight: SearchButton }}
         />
       </Drawer.Navigator>
     );

@@ -2,13 +2,18 @@ import { ScrollView } from "react-native-gesture-handler";
 import Button from "../../components/common/basic/Button";
 import DoctorCard from "../../components/common/doctors/DoctorCard";
 import React from "react";
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { View, Text, StyleSheet, Image,TouchableOpacity ,Pressable } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { OpenMaps } from "../../utils/OpenMaps";
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const DetailsDoctorScreen = () => {
-  const doctor = { location: { latitude: 36.8936411, longitude: 10.1857502 } };
+  const doctor = { location: { latitude: 36.8936411, longitude: 10.1857502 }};
+  const navigation = useNavigation();
+  const goToOtherScreen = () => {
+    // Navigate to the other screen when "See more" is clicked
+  navigation.navigate('Reviews');}
   return (
     <ScrollView>
       <DoctorCard />
@@ -74,10 +79,11 @@ const DetailsDoctorScreen = () => {
             </View>
           );
         })}
-        <View style={[]}>
+        <View>
+        <TouchableOpacity onPress={goToOtherScreen}>
           <Text style={styles.seeMore}>See More <Icon name="chevron-right" /> </Text>
+        </TouchableOpacity>
         </View>
-        
       </View>
       
     </ScrollView>
