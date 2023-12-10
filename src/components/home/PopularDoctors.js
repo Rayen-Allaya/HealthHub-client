@@ -6,7 +6,7 @@ const PopularDoctors = () => {
   const doctors = [1, 2, 3, 4];
   return (
     <View style={[styles.section]}>
-      <Text style={[styles.title]}>PopularDoctors</Text>
+      <Text style={[styles.title]}>Popular Doctors</Text>
       <FlatList
         data={doctors}
         horizontal
