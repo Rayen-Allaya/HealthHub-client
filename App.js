@@ -6,6 +6,11 @@ import { DoctorsListScreen } from "./src/screens/Doctors/DoctorsListScreen";
 import SearchButton from "./src/components/doctorsList/SearchButton";
 import { createStackNavigator } from "@react-navigation/stack";
 import FilterDoctorsScreen from "./src/screens/Doctors/FilterDoctorsScreen";
+import ReviewsScreen from "./src/screens/Doctors/ReviewsScreen";
+import DetailsDoctorScreen from "./src/screens/Doctors/DetailsDoctorScreen";
+import DoctorAvailibilityScreen from "./src/screens/Doctors/DoctorAvailibilityScreen";
+import SignUp from "./src/screens/Sign/SignUp";
+import SignIn from "./src/screens/Sign/SignIn";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -29,6 +34,16 @@ export default function App() {
           component={DoctorsListScreen}
           options={{ headerRight: SearchButton }}
         />
+        <Drawer.Screen
+          name="Login"
+          component={SignIn}
+          options={options.authOptions}
+        />
+        <Drawer.Screen
+          name="Register"
+          component={SignUp}
+          options={options.authOptions}
+        />
       </Drawer.Navigator>
     );
   }
@@ -41,7 +56,22 @@ export default function App() {
           component={Root}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Search" component={FilterDoctorsScreen} />
+        <Stack.Screen
+          name="FilterDoctorsScreen"
+          options={{ title: "Search" }}
+          component={FilterDoctorsScreen}
+        />
+        <Stack.Screen
+          name="DoctorsDetails"
+          options={{ title: "Doctor's Details" }}
+          component={DetailsDoctorScreen}
+        />
+        <Stack.Screen
+          name="Schedule Appointment"
+          component={DoctorAvailibilityScreen}
+        />
+        <Stack.Screen name="Reviews" component={ReviewsScreen} />
+        <Stack.Screen name="Doctor Details" component={DetailsDoctorScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -52,6 +82,14 @@ const options = {
     headerTitleStyle: { opacity: 0 },
     headerStyle: {
       backgroundColor: "#0EBE7F",
+      elevation: 0,
+      shadowOpacity: 0,
+    },
+  },
+  authOptions: {
+    headerTitleStyle: { opacity: 0 },
+    headerStyle: {
+      backgroundColor: "transparent",
       elevation: 0,
       shadowOpacity: 0,
     },

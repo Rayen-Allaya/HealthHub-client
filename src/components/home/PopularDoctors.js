@@ -1,12 +1,34 @@
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import React from "react";
 import PopularDoctorsCard from "./PopularDoctorsCard";
+import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const PopularDoctors = () => {
   const doctors = [1, 2, 3, 4];
+  const navigation = useNavigation();
+  const goToOtherScreen = () => {
+    // Navigate to the other screen when "See more" is clicked
+    navigation.navigate("Find Doctors");
+  };
   return (
     <View style={[styles.section]}>
-      <Text style={[styles.title]}>Popular Doctors</Text>
+
+      <View style={[styles.titles]}>
+        <Text style={[styles.title]}>Popular Doctors </Text>
+        {/* <TouchableOpacity onPress={goToOtherScreen}>
+          <Text style={[styles.narrow]}>
+            See More <Icon name="chevron-right" />
+          </Text>
+        </TouchableOpacity> */}
+      </View>
+
       <FlatList
         data={doctors}
         horizontal
@@ -24,10 +46,21 @@ const styles = StyleSheet.create({
     paddingVertical: 35,
     marginBottom:10,
   },
+  titles: {
+    flexDirection: "row",
+  },
   title: {
     marginHorizontal: 15,
     marginBottom: 10,
     fontSize: 24,
     fontWeight: 700,
+  },
+  narrow: {
+    marginTop: 6,
+    marginLeft: 100,
+    // fontSize: 13,
+    color: "black",
+    fontWeight: 200,
+    textDecorationLine: "underline",
   },
 });
