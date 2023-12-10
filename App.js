@@ -7,7 +7,8 @@ import SearchButton from "./src/components/doctorsList/SearchButton";
 import { createStackNavigator } from "@react-navigation/stack";
 import FilterDoctorsScreen from "./src/screens/Doctors/FilterDoctorsScreen";
 import DetailsDoctorScreen from "./src/screens/Doctors/DetailsDoctorScreen";
-
+import SignUp from "./src/screens/Sign/SignUp";
+import SignIn from "./src/screens/Sign/SignIn";
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -34,6 +35,14 @@ export default function App() {
           name="Detail Doctors"
           component={DetailsDoctorScreen}
           options={{ headerRight: SearchButton }}
+        />
+        <Drawer.Screen
+          name="SignUp"
+          component={SignUp}
+        />
+        <Drawer.Screen
+          name="SignIn"
+          component={SignIn}
         />
       </Drawer.Navigator>
     );

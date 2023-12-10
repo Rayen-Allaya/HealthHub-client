@@ -12,7 +12,7 @@ const Button = ({ title, width, height }) => {
   };
 
   return (
-    <View style={[styles.wrapperCustom]}>
+    <View style={[styles.wrapperCustom, width={width}]}>
       <Pressable
         onPressIn={handlePressIn}
         style={({ pressed }) => [
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     display: "flex",
     alignItems: "center",
-    width: "100%",
   },
   text: {
     fontSize: 20,
