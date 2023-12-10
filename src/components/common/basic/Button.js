@@ -1,29 +1,21 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 
-const Button = ({ title, width, height }) => {
-  const [isPressed, setIsPressed] = useState(false);
-
-  const handlePressIn = () => {
-    setIsPressed(true);
-    setTimeout(() => {
-      setIsPressed(false);
-    }, 1000);
-  };
-
+const Button = ({ title, width, height, onPress }) => {
   return (
-    <View style={[styles.wrapperCustom]}>
-      <Pressable
-        onPressIn={handlePressIn}
-        style={({ pressed }) => [
+    <Pressable
+      onPress={onPress}
+      style={[
+        ({ pressed }) => [
           pressed && {
             opacity: 0.7,
           },
-        ]}
-      >
-        <Text style={styles.text}>{title}</Text>
-      </Pressable>
-    </View>
+        ],
+        styles.wrapperCustom,
+      ]}
+    >
+      <Text style={styles.text}>{title}</Text>
+    </Pressable>
   );
 };
 

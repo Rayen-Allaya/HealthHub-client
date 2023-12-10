@@ -7,7 +7,7 @@ const SearchButton = () => {
   const navigation = useNavigation();
 
   const onPressFunction = () => {
-    navigation.navigate("Search");
+    navigation.navigate("FilterDoctorsScreen");
   };
   return (
     <Pressable onPress={onPressFunction}>

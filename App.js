@@ -7,6 +7,7 @@ import SearchButton from "./src/components/doctorsList/SearchButton";
 import { createStackNavigator } from "@react-navigation/stack";
 import FilterDoctorsScreen from "./src/screens/Doctors/FilterDoctorsScreen";
 import DetailsDoctorScreen from "./src/screens/Doctors/DetailsDoctorScreen";
+import DoctorAvailibilityScreen from "./src/screens/Doctors/DoctorAvailibilityScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -30,11 +31,6 @@ export default function App() {
           component={DoctorsListScreen}
           options={{ headerRight: SearchButton }}
         />
-        <Drawer.Screen
-          name="Detail Doctors"
-          component={DetailsDoctorScreen}
-          options={{ headerRight: SearchButton }}
-        />
       </Drawer.Navigator>
     );
   }
@@ -47,7 +43,20 @@ export default function App() {
           component={Root}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Search" component={FilterDoctorsScreen} />
+        <Stack.Screen
+          name="FilterDoctorsScreen"
+          options={{ title: "Search" }}
+          component={FilterDoctorsScreen}
+        />
+        <Stack.Screen
+          name="DoctorsDetails"
+          options={{ title: "Doctor's Details" }}
+          component={DetailsDoctorScreen}
+        />
+        <Drawer.Screen
+          name="Schedule Appointment"
+          component={DoctorAvailibilityScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
