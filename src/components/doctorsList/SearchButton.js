@@ -3,7 +3,7 @@ import React from "react";
 import Icon from "react-native-vector-icons/Entypo";
 import { useNavigation } from "@react-navigation/native";
 
-const SearchButton = () => {
+const SearchButton = ({ color = "black", size = 35 }) => {
   const navigation = useNavigation();
 
   const onPressFunction = () => {
@@ -13,8 +13,8 @@ const SearchButton = () => {
     <Pressable onPress={onPressFunction}>
       <Icon
         name="magnifying-glass"
-        size={30}
-        color="black"
+        size={size}
+        color={color}
         style={{ marginRight: 15 }}
       />
     </Pressable>

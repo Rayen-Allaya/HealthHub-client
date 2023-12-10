@@ -22,6 +22,7 @@ export default PopularDoctors;
 const styles = StyleSheet.create({
   section: {
     paddingVertical: 35,
+    marginBottom:10,
   },
   title: {
     marginHorizontal: 15,
