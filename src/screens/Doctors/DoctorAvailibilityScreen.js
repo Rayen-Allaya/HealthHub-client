@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
+import { View, Text, StyleSheet, Pressable, Modal, FlatList } from "react-native";
 import React, { useState } from "react";
 import Card from "../../components/common/basic/Card";
 import moment from "moment";
@@ -37,6 +37,10 @@ const DoctorAvailibilityScreen = () => {
     setDate((prevState) => {
       return prevState.clone().add(1, "month");
     });
+  };
+  const [modalVisible, setModalVisible] = useState(false);
+  const handleModalVisible = () => {
+    setModalVisible(true);
   };
 
   const calendarMonth = constructCalendarMonth(date);
@@ -102,11 +106,30 @@ const DoctorAvailibilityScreen = () => {
           }}
           keyExtractor={(item, index) => String(index)}
         />
+        {/* Modal */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}>
+      
+      <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+          {/* <Image
+            source={require('./path/to/your/image.png')} 
+            style={styles.modalImage}
+            /> */}
+            <Text style={styles.modalText}>Your appointment will be reviewed by the doctor, a notification will be sent upon approval</Text>
+            <Button style={{width:200,}} title="Close" onPress={() => setModalVisible(false)} />
+          </View>
+        </View>
+        </Modal>
         <Input
           style={styles.descriptionInput}
           placeholder="Add Description..."
         />
-        <Button title={"Submit"} />
+        <Button title={"Submit"} onPress={handleModalVisible} />
+
       </View>
     </>
   );
@@ -226,6 +249,23 @@ const styles = StyleSheet.create({
   },
   descriptionInput: {
     marginVertical: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginBottom: 20,
   },
 });
 
