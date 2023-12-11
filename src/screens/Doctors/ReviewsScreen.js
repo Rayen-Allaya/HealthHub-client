@@ -15,6 +15,14 @@ const ReviewsScreen = () => {
     const handleReviewChange = (text) => {
     setReview(text);
     };
+    const [expandedReviews, setExpandedReviews] = useState([]);
+    const toggleExpanded = (id) => {
+        setExpandedReviews((prevExpanded) =>
+          prevExpanded.includes(id)
+            ? prevExpanded.filter((item) => item !== id)
+            : [...prevExpanded, id]
+        );
+      };
     const handleSubmit = () => {
         // Add logic here for submitting the review (e.g., send it to the backend)
         console.log('Review submitted:', review);
@@ -33,18 +41,23 @@ const ReviewsScreen = () => {
         <View style={styles.view}>
             <Text style={styles.title1}>All Reviews</Text>
             {reviews.map((review, id) => {
+                const isExpanded = expandedReviews.includes(id);
+                const displayText = isExpanded ? review.content : review.content.substring(0, 100);
+                const isShortReview = review.content.length <= 100;
                 return (
                     <View key={id}
                         style={[styles.reviewContainer, 
                         {borderBottomWidth: id == reviews.length - 1 ? 0 : 1,},]}>
-                        <Text style={styles.paragraph}>
-                        {review.content.substring(0, 100)}
-                        {review.content.length > 100 && "..."}
-                        </Text>
+                        <Text style={styles.paragraph}>{displayText}{!isShortReview && !isExpanded && '...'}</Text>
+                        {review.content.length > 100 && (
+                        <TouchableOpacity onPress={() => toggleExpanded(id)}>
+                            <Text style={styles.readMore}>{isExpanded ? 'Read Less' : 'Read More'}</Text>
+                        </TouchableOpacity>
+                        )}
                     </View>
-          );
-        })}
-      </View>
+                );
+            })}
+        </View>
       <View style={styles.container}>
       <TextInput
         style={styles.input}
@@ -86,8 +99,8 @@ const styles = StyleSheet.create({
     paragraph: {
         fontSize: 15,
         fontWeight: "bold",
-        paddingTop: 20,
-        paddingBottom: 15,
+        paddingTop: 10,
+        paddingBottom: 10,
     },
     container: {
         margin: 20,
@@ -101,6 +114,10 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 10,
     },
+    readMore: {
+        color: 'gray',
+        paddingBottom: 5,
+      },
 });
 
 const reviews = [
