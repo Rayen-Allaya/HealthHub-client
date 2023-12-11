@@ -11,6 +11,7 @@ import DetailsDoctorScreen from "./src/screens/Doctors/DetailsDoctorScreen";
 import DoctorAvailibilityScreen from "./src/screens/Doctors/DoctorAvailibilityScreen";
 import SignUp from "./src/screens/Sign/SignUp";
 import SignIn from "./src/screens/Sign/SignIn";
+import PrivacyPolicy from "./src/utils/PivacyPolicy";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -72,6 +73,7 @@ export default function App() {
         />
         <Stack.Screen name="Reviews" component={ReviewsScreen} />
         <Stack.Screen name="Doctor Details" component={DetailsDoctorScreen} />
+        <Stack.Screen name="Privacy Policy" component={PrivacyPolicy} />
       </Stack.Navigator>
     </NavigationContainer>
   );
