@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text,TouchableOpacity ,StyleSheet, TextInput } from "react-native";
+import { View, Text,TouchableOpacity ,StyleSheet, TextInput, Image } from "react-native";
 import DoctorCard from "../../components/common/doctors/DoctorCard";
 import Button from "../../components/common/basic/Button";
 import { ScrollView } from "react-native-gesture-handler";
@@ -23,6 +23,37 @@ const ReviewsScreen = () => {
             : [...prevExpanded, id]
         );
       };
+    const [defaultRating, setdefaultRating] = useState(1)
+    const [maxRating, setmaxRating] = useState([1,2,3,4,5])
+    const starImgFilled = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png'
+    const starImgCorner = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_corner.png'
+    
+    const CustomRatingBar = () => {
+        return (
+            <View style={styles.CustomRatingBarStyle}>
+                {
+                    maxRating.map((item, key) => {
+                        return (
+                            <TouchableOpacity 
+                                activeOpacity={0.7}
+                                key={item}
+                                onPress={() => setdefaultRating(item)}
+                                >
+                                <Image 
+                                    style={styles.starImgStyle}
+                                    source={
+                                        item<= defaultRating
+                                            ? {uri: starImgFilled}
+                                            : {uri: starImgCorner}
+                                    }
+                                />
+                            </TouchableOpacity>
+                        )
+                    })
+                }
+            </View>
+        )
+    };
     const handleSubmit = () => {
         // Add logic here for submitting the review (e.g., send it to the backend)
         console.log('Review submitted:', review);
@@ -39,6 +70,8 @@ const ReviewsScreen = () => {
             </View> */}
             <DoctorCard />
         <View style={styles.view}>
+            <Text style={styles.title1}>Overall rating</Text>
+            {/* stars function inserted here  */}
             <Text style={styles.title1}>All Reviews</Text>
             {reviews.map((review, id) => {
                 const isExpanded = expandedReviews.includes(id);
@@ -66,6 +99,10 @@ const ReviewsScreen = () => {
         onChangeText={handleReviewChange}
         multiline
       />
+      <View>
+        <Text style={styles.title1}>Rate this Doctor:</Text>
+        <CustomRatingBar/>
+      </View>
       <Button title="Submit Review!" onPress={handleSubmit} />
     </View>
 
@@ -118,6 +155,17 @@ const styles = StyleSheet.create({
         color: 'gray',
         paddingBottom: 5,
       },
+    CustomRatingBarStyle: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginTop: 10,
+        marginBottom:20,
+    },
+    starImgStyle: {
+        width: 40,
+        height: 40,
+        resizeMode: 'cover',
+    },
 });
 
 const reviews = [

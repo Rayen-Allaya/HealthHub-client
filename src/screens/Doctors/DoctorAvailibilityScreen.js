@@ -119,7 +119,7 @@ const DoctorAvailibilityScreen = () => {
             source={require('./path/to/your/image.png')} 
             style={styles.modalImage}
             /> */}
-            <Text style={styles.modalText}>Your appointment will be reviewed by the doctor, a notification will be sent upon approval</Text>
+            <Text style={styles.modalText}>Your appointment will be reviewed by the doctor, a notification will be sent upon approval </Text>
             <Button style={{width:200,}} title="Close" onPress={() => setModalVisible(false)} />
           </View>
         </View>
