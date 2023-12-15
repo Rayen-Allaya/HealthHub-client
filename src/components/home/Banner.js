@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View, Image } from "react-native";
 import { SearchBar } from "react-native-elements";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
+import Profilepic from "../../components/common/basic/Profilepic";
 
 export const Banner = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -8,10 +11,27 @@ export const Banner = () => {
   const searchChangeHandler = (search) => {
     setSearchValue(search);
   };
+  const navigation = useNavigation();
+  const navigateToProfile = () => {
+    navigation.navigate("Profile");
+  };
 
   return (
     <View style={[styles.section]}>
+      <TouchableOpacity onPress={navigateToProfile}>
+        <Profilepic
+          source={require("../../../assets/images/profile/profilepic.jpg")}
+          style={{
+            width: 50,
+            height: 50,
+            alignSelf: "flex-end",
+            marginRight: 10,
+          }}
+        />
+      </TouchableOpacity>
+
       <Text style={[styles.title, styles.mainTitle]}>Welcome to HealHub</Text>
+
       <Text style={[styles.title, styles.secondaryTitle]}>
         Welcome to HealHub
       </Text>
@@ -42,6 +62,7 @@ const styles = StyleSheet.create({
   title: {
     marginHorizontal: 20,
     color: "white",
+    top: -38,
   },
   mainTitle: {
     fontSize: 20,

@@ -13,7 +13,7 @@ const HomeScreen = () => {
         <SpecialityList />
         <PopularDoctors />
       </ScrollView>
-      <Footer />
+    <Footer />
     </View>
   );
 };

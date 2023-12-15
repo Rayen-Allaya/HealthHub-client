@@ -11,6 +11,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import SignInput from "../../components/common/basic/SignInput";
 import Button from "../../components/common/basic/Button";
 import { useNavigation } from "@react-navigation/native";
+
 const SignIn = () => {
   const navigation = useNavigation();
   const navigateToSignIn = () => {
@@ -91,6 +92,7 @@ const styles = StyleSheet.create({
   text: {
     alignItems: "center",
     marginTop: -25,
+    
   },
   join: {
     fontSize: 30,
