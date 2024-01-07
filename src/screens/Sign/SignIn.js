@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Image,
   StyleSheet,
@@ -6,11 +7,13 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import SignInput from "../../components/common/basic/SignInput";
 import Button from "../../components/common/basic/Button";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { baseUrl } from "../../../apiUrl";
 const SignIn = () => {
   const navigation = useNavigation();
   const navigateToSignIn = () => {
@@ -19,6 +22,28 @@ const SignIn = () => {
   const navigateToHome = () => {
     navigation.navigate("Home");
   };
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const route = useRoute();
+
+  let setToken = route.params.setToken;
+
+  async function submit() {
+    const response = await fetch(`http://${baseUrl()}/api/auth/login`, {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = await response.json();
+    const token = res.token;
+
+    await AsyncStorage.setItem("token", token);
+    setToken(token);
+    navigation.navigate("Home");
+  }
 
   return (
     <LinearGradient
@@ -47,9 +72,22 @@ const SignIn = () => {
           Our platform offers the best booking system to enable you to save time
         </Text>
       </View>
-      <SignInput label={"Email"} icon={"mail"} />
-      <SignInput label={"Password"} icon={"lock"} />
+      <SignInput
+        label={"Email"}
+        icon={"mail"}
+        value={email}
+        type={"email"}
+        setValue={setEmail}
+      />
+      <SignInput
+        label={"Password"}
+        icon={"lock"}
+        value={password}
+        type={"password"}
+        setValue={setPassword}
+      />
       <Button
+        onPress={submit}
         title={"Sign In"}
         style={{ marginHorizontal: 20, marginTop: 25 }}
       />

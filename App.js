@@ -11,11 +11,22 @@ import DetailsDoctorScreen from "./src/screens/Doctors/DetailsDoctorScreen";
 import DoctorAvailibilityScreen from "./src/screens/Doctors/DoctorAvailibilityScreen";
 import SignUp from "./src/screens/Sign/SignUp";
 import SignIn from "./src/screens/Sign/SignIn";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Logout from "./src/screens/Sign/Logout";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    (async function () {
+      const tokenP = await AsyncStorage.getItem("token");
+      setToken(tokenP);
+    })();
+  }, []);
+
   function Root() {
     return (
       <Drawer.Navigator
@@ -29,20 +40,36 @@ export default function App() {
           name="Home"
           component={HomeScreen}
         />
+
         <Drawer.Screen
           name="Find Doctors"
           component={DoctorsListScreen}
           options={{ headerRight: SearchButton }}
         />
+
+        {!token && (
+          <Drawer.Screen
+            name="Login"
+            component={SignIn}
+            options={options.authOptions}
+            initialParams={{ setToken: setToken }}
+          />
+        )}
+        {!token && (
+          <Drawer.Screen
+            name="Register"
+            component={SignUp}
+            options={options.authOptions}
+          />
+        )}
+
         <Drawer.Screen
-          name="Login"
-          component={SignIn}
-          options={options.authOptions}
-        />
-        <Drawer.Screen
-          name="Register"
-          component={SignUp}
-          options={options.authOptions}
+          name="Logout"
+          component={Logout}
+          options={{
+            drawerItemStyle: { height: token ? "100%" : 0 },
+          }}
+          initialParams={{ setToken: setToken }}
         />
       </Drawer.Navigator>
     );
