@@ -7,6 +7,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Input from "../../components/common/basic/Input";
 import Button from "../../components/common/basic/Button";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { baseUrl } from "../../../apiUrl";
 
 const constructCalendarMonth = (d) => {
@@ -28,6 +30,7 @@ const constructCalendarMonth = (d) => {
 const DoctorAvailibilityScreen = () => {
   const [doctor, setDoctor] = useState();
   const [availibilities, setAvailibilities] = useState();
+  const [rows, setRows] = useState();
   const [availableTimes, setAvailableTimes] = useState([]);
   const currentDate = moment();
   const [selectedDay, setSelectedDay] = useState(currentDate);
@@ -53,6 +56,7 @@ const DoctorAvailibilityScreen = () => {
         `http://${baseUrl()}/api/doctors/${doctor_id}/availibilities`
       );
       const res = await response.json();
+      setRows(res);
       setAvailibilities(
         res.map((row, id) => {
           return moment(row.datetime);
@@ -90,7 +94,32 @@ const DoctorAvailibilityScreen = () => {
     }
   }
 
+  const pressHandler = async (datetime) => {
+    const id = rows.filter(
+      (row) =>
+        moment(row.datetime).format("YYYY/MM/DD hh:mm") ==
+        moment(datetime).format("YYYY/MM/DD hh:mm")
+    )[0].id;
+
+    token = await AsyncStorage.getItem("token");
+
+    let response = await fetch(
+      `http://${baseUrl()}/api/appointments/${id}/create`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+          "content-type": "application/json",
+        },
+      }
+    );
+    let res = await response.json();
+    navigation.navigate("Successful Appointment");
+  };
+
   const calendarMonth = constructCalendarMonth(date);
+
+  const appointmentHandler = () => {};
+
   return (
     <>
       <Text style={styles.doctorTitle}>{doctor.user.name}</Text>
@@ -156,11 +185,17 @@ const DoctorAvailibilityScreen = () => {
             horizontal
             renderItem={(availibleTime) => {
               return (
-                <View style={[styles.availableTimeBubble]}>
-                  <Text style={[styles.availableTimeBubbleText]}>
-                    {availibleTime.item.format("hh:mm A")}
-                  </Text>
-                </View>
+                <Pressable
+                  onPress={() => {
+                    pressHandler(availibleTime.item);
+                  }}
+                >
+                  <View style={[styles.availableTimeBubble]}>
+                    <Text style={[styles.availableTimeBubbleText]}>
+                      {availibleTime.item.format("hh:mm A")}
+                    </Text>
+                  </View>
+                </Pressable>
               );
             }}
             keyExtractor={(item, index) => String(index)}

@@ -15,6 +15,9 @@ import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Logout from "./src/screens/Sign/Logout";
 import ProfileScreen from "./src/screens/Profile/ProfileScreen";
+import Appointments from "./src/screens/appointments/Appointments";
+import AppointmentsHistory from "./src/screens/appointments/AppointmentsHistory";
+import Successful from "./src/screens/Successful";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -48,20 +51,22 @@ export default function App() {
           options={{ headerRight: SearchButton }}
         />
 
-        {!token && (
-          <Drawer.Screen
-            name="Login"
-            component={SignIn}
-            options={options.authOptions}
-            initialParams={{ setToken: setToken }}
-          />
-        )}
+        <Drawer.Screen
+          name="Login"
+          component={SignIn}
+          options={{
+            ...options.authOptions,
+            drawerItemStyle: { height: !token ? 50 : 0 },
+          }}
+          initialParams={{ setToken: setToken }}
+        />
+
         <Drawer.Screen
           name="Register"
           component={SignUp}
           options={{
             ...options.authOptions,
-            drawerItemStyle: { height: !token ? "100%" : 0 },
+            drawerItemStyle: { height: !token ? 50 : 0 },
           }}
         />
 
@@ -69,15 +74,30 @@ export default function App() {
           name="Profile"
           component={ProfileScreen}
           options={{
-            drawerItemStyle: { height: token ? "100%" : 0 },
+            drawerItemStyle: { height: token ? 50 : 0 },
           }}
           initialParams={{ setToken: setToken }}
         />
         <Drawer.Screen
+          name="Future Appointments"
+          component={Appointments}
+          options={{
+            drawerItemStyle: { height: token ? 50 : 0 },
+          }}
+        />
+        <Drawer.Screen
+          name="Appointments History"
+          options={{
+            drawerItemStyle: { height: token ? 50 : 0 },
+          }}
+          component={AppointmentsHistory}
+        />
+
+        <Drawer.Screen
           name="Logout"
           component={Logout}
           options={{
-            drawerItemStyle: { height: token ? "100%" : 0 },
+            drawerItemStyle: { height: token ? 50 : 0 },
           }}
           initialParams={{ setToken: setToken }}
         />
@@ -107,6 +127,7 @@ export default function App() {
           name="Schedule Appointment"
           component={DoctorAvailibilityScreen}
         />
+        <Stack.Screen name="Successful Appointment" component={Successful} />
         <Stack.Screen name="Reviews" component={ReviewsScreen} />
         <Stack.Screen name="Doctor Details" component={DetailsDoctorScreen} />
       </Stack.Navigator>

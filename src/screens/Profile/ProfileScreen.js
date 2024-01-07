@@ -38,8 +38,8 @@ const ProfileScreen = () => {
       }}
     >
       <ScrollView style={styles.container}>
-        <TouchableOpacity onPress={navigateToEditProfile}>
-          {/* <Image
+        {/* <TouchableOpacity onPress={navigateToEditProfile}>
+          <Image
             source={require("../../../assets/images/profile/edit.png")}
             style={{
               width: 30,
@@ -47,10 +47,10 @@ const ProfileScreen = () => {
               alignSelf: "flex-end",
               justifyContent: "flex-end",
             }}
-          /> */}
-        </TouchableOpacity>
+          />
+        </TouchableOpacity> */}
         <View style={{ alignSelf: "center" }}>
-          {/* <Avatar
+          <Avatar
             source={require("../../../assets/images/profile/profilepic.jpg")}
             size={109}
             rounded
@@ -60,7 +60,7 @@ const ProfileScreen = () => {
               marginRight: 10,
               marginBottom: 20,
             }}
-          /> */}
+          />
 
           <Text
             style={[
@@ -77,29 +77,29 @@ const ProfileScreen = () => {
 
         <View style={styles.userInfoSection}>
           <View style={styles.row}>
-            {/* <Image
+            <Image
               source={require("../../../assets/images/profile/location.png")}
               style={styles.logo}
-            /> */}
+            />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
               Tunis, Tunisia
             </Text>
           </View>
           <View style={styles.row}>
-            {/* <Image
+            <Image
               source={require("../../../assets/images/profile/phone.png")}
               style={styles.logo}
-            /> */}
+            />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
               +91-900000009
             </Text>
           </View>
 
           <View style={styles.row}>
-            {/* <Image
+            <Image
               source={require("../../../assets/images/profile/email.png")}
               style={styles.logo}
-            /> */}
+            />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
               john_doe@email.com
             </Text>
@@ -144,10 +144,10 @@ const ProfileScreen = () => {
               </Text>
             </ScrollView>
             <TouchableOpacity onPress={toggleModal} style={styles.closeButton}>
-              {/* <Image
+              <Image
                 source={require("../../../assets/images/profile/arrow-up.png")}
                 style={styles.logo}
-              /> */}
+              />
             </TouchableOpacity>
           </View>
         </Modal>
