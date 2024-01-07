@@ -14,6 +14,7 @@ import SignIn from "./src/screens/Sign/SignIn";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Logout from "./src/screens/Sign/Logout";
+import ProfileScreen from "./src/screens/Profile/ProfileScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -55,14 +56,23 @@ export default function App() {
             initialParams={{ setToken: setToken }}
           />
         )}
-        {!token && (
-          <Drawer.Screen
-            name="Register"
-            component={SignUp}
-            options={options.authOptions}
-          />
-        )}
+        <Drawer.Screen
+          name="Register"
+          component={SignUp}
+          options={{
+            ...options.authOptions,
+            drawerItemStyle: { height: !token ? "100%" : 0 },
+          }}
+        />
 
+        <Drawer.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            drawerItemStyle: { height: token ? "100%" : 0 },
+          }}
+          initialParams={{ setToken: setToken }}
+        />
         <Drawer.Screen
           name="Logout"
           component={Logout}
