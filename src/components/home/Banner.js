@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, Image } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import Profilepic from "../../components/common/basic/Profilepic";
+import { Avatar } from "react-native-elements";
 
 export const Banner = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -12,22 +12,26 @@ export const Banner = () => {
     setSearchValue(search);
   };
   const navigation = useNavigation();
+
   const navigateToProfile = () => {
-    navigation.navigate("Profile");
+    navigation.navigate("ProfileScreen");
   };
 
   return (
     <View style={[styles.section]}>
       <TouchableOpacity onPress={navigateToProfile}>
-        <Profilepic
+        <Avatar
           source={require("../../../assets/images/profile/profilepic.jpg")}
-          style={{
-            width: 50,
-            height: 50,
-            alignSelf: "flex-end",
+          size={60}
+          rounded
+          onPress={navigateToProfile}
+          activeOpacity={0.7}
+          containerStyle={{
+            alignSelf:"flex-end",
             marginRight: 10,
           }}
         />
+
       </TouchableOpacity>
 
       <Text style={[styles.title, styles.mainTitle]}>Welcome to HealHub</Text>
