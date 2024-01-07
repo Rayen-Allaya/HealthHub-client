@@ -1,11 +1,13 @@
 import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../components/common/basic/Card";
 import moment from "moment";
 import { Calendar } from "react-native-calendars";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Input from "../../components/common/basic/Input";
 import Button from "../../components/common/basic/Button";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { baseUrl } from "../../../apiUrl";
 
 const constructCalendarMonth = (d) => {
   const days = [];
@@ -24,7 +26,42 @@ const constructCalendarMonth = (d) => {
 };
 
 const DoctorAvailibilityScreen = () => {
+  const [doctor, setDoctor] = useState();
+  const [availibilities, setAvailibilities] = useState();
+  const [availableTimes, setAvailableTimes] = useState([]);
   const currentDate = moment();
+  const [selectedDay, setSelectedDay] = useState(currentDate);
+
+  // const doctor = { location: { latitude: 36.8936411, longitude: 10.1857502 } };
+  const navigation = useNavigation();
+  const route = useRoute();
+  const doctor_id = route.params.doctor_id;
+
+  useEffect(() => {
+    (async function () {
+      const response = await fetch(
+        `http://${baseUrl()}/api/doctors/${doctor_id}`
+      );
+      const res = await response.json();
+      setDoctor(res);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async function () {
+      const response = await fetch(
+        `http://${baseUrl()}/api/doctors/${doctor_id}/availibilities`
+      );
+      const res = await response.json();
+      setAvailibilities(
+        res.map((row, id) => {
+          return moment(row.datetime);
+        })
+      );
+      updateAvailableTime();
+    })();
+  }, []);
+
   const [date, setDate] = useState(currentDate.clone());
 
   const switchPreviousMonth = () => {
@@ -39,10 +76,24 @@ const DoctorAvailibilityScreen = () => {
     });
   };
 
+  if (!doctor || !availibilities) {
+    return <Text>Loading</Text>;
+  }
+
+  function updateAvailableTime(day) {
+    if (availibilities) {
+      setSelectedDay(day);
+      const dayAvailibilities = availibilities.filter(
+        (date) => date.format("YYYY/MM/DD") === day.format("YYYY/MM/DD")
+      );
+      setAvailableTimes(dayAvailibilities.map((date) => date.clone()));
+    }
+  }
+
   const calendarMonth = constructCalendarMonth(date);
   return (
     <>
-      <Text style={styles.doctorTitle}>Dr.Ahmed Salah</Text>
+      <Text style={styles.doctorTitle}>{doctor.user.name}</Text>
       <Card style={styles.calendar}>
         <View style={styles.calendarHeader}>
           <Text style={styles.monthName}>
@@ -69,39 +120,54 @@ const DoctorAvailibilityScreen = () => {
         <View style={styles.daysOfMonth}>
           {calendarMonth.map((day, index) => {
             return (
-              <Text
-                style={[
-                  styles.dayOfMonth,
-                  day.format("MM") != date.format("MM") &&
-                    styles.dayOfNotCurrentMonth,
-                  day.format("DD/MM/YYYY") ===
-                    currentDate.format("DD/MM/YYYY") &&
-                    styles.currentDayOfMonth,
-                ]}
-                key={index}
+              <Pressable
+                style={[styles.dayOfMonthContainer]}
+                onPress={() => {
+                  updateAvailableTime(day);
+                }}
               >
-                {day.format("DD")}
-              </Text>
+                <Text
+                  style={[
+                    styles.dayOfMonth,
+                    day.format("MM") != date.format("MM") &&
+                      styles.dayOfNotCurrentMonth,
+                    day.format("DD/MM/YYYY") ===
+                      currentDate.format("DD/MM/YYYY") &&
+                      styles.currentDayOfMonth,
+                    availibilities
+                      .map((date) => date.format("DD/MM/YYYY"))
+                      .includes(day.format("DD/MM/YYYY")) &&
+                      styles.availableDays,
+                  ]}
+                  key={index}
+                >
+                  {day.format("DD")}
+                </Text>
+              </Pressable>
             );
           })}
         </View>
       </Card>
       <View style={styles.timeCard}>
         <Text style={styles.availibleTimeTitle}>Available Times</Text>
-        <FlatList
-          data={availableTimes}
-          horizontal
-          renderItem={(availibleTime) => {
-            return (
-              <View style={[styles.availableTimeBubble]}>
-                <Text style={[styles.availableTimeBubbleText]}>
-                  {availibleTime.item}
-                </Text>
-              </View>
-            );
-          }}
-          keyExtractor={(item, index) => String(index)}
-        />
+        {availableTimes && availableTimes.length > 0 ? (
+          <FlatList
+            data={availableTimes}
+            horizontal
+            renderItem={(availibleTime) => {
+              return (
+                <View style={[styles.availableTimeBubble]}>
+                  <Text style={[styles.availableTimeBubbleText]}>
+                    {availibleTime.item.format("hh:mm A")}
+                  </Text>
+                </View>
+              );
+            }}
+            keyExtractor={(item, index) => String(index)}
+          />
+        ) : (
+          <Text style={[styles.noTime]}>No Times Available</Text>
+        )}
         <Input
           style={styles.descriptionInput}
           placeholder="Add Description..."
@@ -128,9 +194,12 @@ const monthsOfYear = [
   "December",
 ];
 
-const availableTimes = ["8:00", "9:00", "12:30", "14:00", "14:30", "15:00"];
-
 const styles = StyleSheet.create({
+  noTime: {
+    margin: 30,
+    fontSize: 16,
+    color: "red",
+  },
   doctorTitle: {
     fontSize: 24,
     fontWeight: "600",
@@ -171,6 +240,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
   },
+
   daysOfMonth: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -182,10 +252,19 @@ const styles = StyleSheet.create({
     color: "#0EBE7F",
     fontWeight: "600",
   },
-  dayOfMonth: {
+  availableDays: {
+    backgroundColor: "#0EBE7F55",
+    borderRadius: 100,
+  },
+  dayOfMonthContainer: {
     width: "14.2857%",
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+  },
+  dayOfMonth: {
+    // width: "14.2857%",
     textAlign: "center",
-    paddingVertical: 10,
+    paddingVertical: 5,
   },
   timeCard: {
     backgroundColor: "white",

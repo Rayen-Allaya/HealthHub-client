@@ -2,13 +2,13 @@ import { View, Text, FlatList } from "react-native";
 import React from "react";
 import DoctorCard from "../../components/common/doctors/DoctorCard";
 
-const DoctorsGrid = () => {
-  const doctors = [1, 2, 3, 4, 5, 6];
+const DoctorsGrid = (props) => {
+  const doctors = props.doctors;
   return (
     <View>
       <FlatList
         data={doctors}
-        renderItem={({ item, index }) => <DoctorCard />}
+        renderItem={({ item, index }) => <DoctorCard doctor={item} />}
         keyExtractor={(item, index) => String(index)}
       />
     </View>
