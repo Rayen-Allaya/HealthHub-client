@@ -1,26 +1,54 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../components/common/basic/Input";
 import Card from "../../components/common/basic/Card";
 import SpecialityList from "../../components/doctorsList/SpecialityList";
 import SelectDropdown from "react-native-select-dropdown";
 import Button from "../../components/common/basic/Button";
+import { useNavigation } from "@react-navigation/native";
 
 const FilterDoctorsScreen = () => {
-  const countries = ["Ariana", "Sousse", "Monastir", "Mahdia", "Jerba", "Sfax"];
+  const navigation = useNavigation();
+  const [governorate, setGovernorate] = useState("");
+  const [name, setName] = useState("");
+  const [speciality, setSpeciality] = useState("");
+
+  function specialityClickHandler(specName) {
+    specName = specName.replace(/\s/g, "");
+    if (speciality == specName) {
+      setSpeciality("");
+    } else {
+      setSpeciality(specName);
+    }
+  }
+
+  function submitHandler() {
+    navigation.navigate("Find Doctors", { name, speciality, governorate });
+  }
+
   return (
     <View>
       <Card style={styles.card}>
-        <SpecialityList />
+        <SpecialityList
+          selected={speciality}
+          onPress={specialityClickHandler}
+        />
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Doctor's Name</Text>
-          <TextInput style={styles.input} placeholder="Doctor's Name" />
+          <TextInput
+            style={styles.input}
+            placeholder="Doctor's Name"
+            value={name}
+            onChangeText={setName}
+          />
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Location</Text>
           <SelectDropdown
-            data={countries}
-            onSelect={(selectedItem, index) => {}}
+            data={cities}
+            onSelect={(selectedItem, index) => {
+              setGovernorate(selectedItem);
+            }}
             buttonTextAfterSelection={(selectedItem, index) => {
               return selectedItem;
             }}
@@ -32,7 +60,7 @@ const FilterDoctorsScreen = () => {
             defaultButtonText={"Select Government"}
           />
         </View>
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Price Range</Text>
           <View
             style={{
@@ -52,9 +80,9 @@ const FilterDoctorsScreen = () => {
               keyboardType="numeric"
             />
           </View>
-        </View>
+        </View> */}
         <View style={[styles.inputContainer, { marginTop: 40 }]}>
-          <Button title={"Apply Filters"} />
+          <Button title={"Apply Filters"} onPress={submitHandler} />
         </View>
       </Card>
     </View>
@@ -103,4 +131,5 @@ const styles = StyleSheet.create({
   },
 });
 
+cities = ["Tunis", "Ariana", "Manouba", "Ben Arous", "Sousse", "Sfax"];
 export default FilterDoctorsScreen;

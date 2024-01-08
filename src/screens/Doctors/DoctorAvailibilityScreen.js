@@ -102,6 +102,11 @@ const DoctorAvailibilityScreen = () => {
     )[0].id;
 
     token = await AsyncStorage.getItem("token");
+    if (!token) {
+      navigation.navigate("Login");
+
+      return;
+    }
 
     let response = await fetch(
       `http://${baseUrl()}/api/appointments/${id}/create`,

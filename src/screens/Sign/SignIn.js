@@ -41,8 +41,8 @@ const SignIn = () => {
     const token = res.token;
 
     await AsyncStorage.setItem("token", token);
-    setToken(token);
     navigation.navigate("Home");
+    setToken(token);
   }
 
   return (

@@ -1,20 +1,42 @@
-import { FlatList } from "react-native";
+import { FlatList, Pressable } from "react-native";
 import React from "react";
 import SpecialityCard from "./SpecialityCard";
 
-const SpecialityList = () => {
+const SpecialityList = (props) => {
   const specialities = [
-    { image: require("../../../assets/images/home/tooth.png") },
-    { image: require("../../../assets/images/home/heart.png") },
-    { image: require("../../../assets/images/home/eye.png") },
-    { image: require("../../../assets/images/home/dermatology.png") },
+    {
+      name: "Dentist",
+      image: require("../../../assets/images/home/tooth.png"),
+    },
+    {
+      name: "Cardiologist",
+      image: require("../../../assets/images/home/heart.png"),
+    },
+    {
+      name: "Ophthalmologists",
+      image: require("../../../assets/images/home/eye.png"),
+    },
+    {
+      name: "Dermatologist",
+      image: require("../../../assets/images/home/dermatology.png"),
+    },
   ];
+
+  const selected = props.selected ? props.selected : "";
+
   return (
     <FlatList
       data={specialities}
       horizontal
       renderItem={({ item, index }) => (
-        <SpecialityCard color={colors[index % 4]} imageSource={item.image} />
+        <Pressable
+          style={{ opacity: selected == item.name ? 0.5 : 1 }}
+          onPress={() => {
+            props.onPress(item.name);
+          }}
+        >
+          <SpecialityCard color={colors[index % 4]} imageSource={item.image} />
+        </Pressable>
       )}
       keyExtractor={(item, index) => String(index)}
     />

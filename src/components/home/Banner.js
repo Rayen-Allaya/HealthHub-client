@@ -1,12 +1,14 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { SearchBar } from "react-native-elements";
 
-export const Banner = () => {
-  const [searchValue, setSearchValue] = useState("");
-
+export const Banner = (props) => {
+  // const [searchValue, setSearchValue] = useState("");
+  const navigation = useNavigation();
+  const { name, setName } = props;
   const searchChangeHandler = (search) => {
-    setSearchValue(search);
+    setName(search);
   };
 
   return (
@@ -18,12 +20,18 @@ export const Banner = () => {
       <SearchBar
         placeholder="Type Here..."
         round={true}
-        value={searchValue}
+        value={name}
         onChangeText={searchChangeHandler}
         containerStyle={[
           styles.searchBarContainer,
           styles.searchBarContainerPosition,
         ]}
+        onPressIn={() => {
+          if (name != "") {
+            navigation.navigate("Find Doctors", { name });
+          }
+        }}
+        on
         inputContainerStyle={[styles.searchBar]}
       />
     </View>
