@@ -1,42 +1,60 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Card from "../common/basic/Card";
+import { useNavigation } from "@react-navigation/native";
 
-const PopularDoctorsCard = () => {
+const PopularDoctorsCard = (props) => {
+  const doctor = props.doctor;
+  let stars = [];
+  const rating = Math.floor(doctor.rating * 2) / 2;
+  const halfStar = rating - Math.floor(rating) != 0;
+  for (let i = 1; i <= Math.floor(rating); i++) {
+    stars.push(i);
+  }
+
+  const navigation = useNavigation();
+
   return (
-    <Card style={[styles.card]}>
-      <Image
-        source={{
-          uri: "https://www.shutterstock.com/image-photo/healthcare-medical-staff-concept-portrait-600nw-2281024823.jpg",
-        }}
-        style={[styles.spacing, styles.doctorImage]}
-      />
-      <Text style={[styles.spacing, styles.doctorName]}>Dr.Fillerup Gard</Text>
-      <Text style={[styles.spacing, styles.speciality]}>
-        Medecine Specialist
-      </Text>
-      <View style={[styles.spacing, styles.starContainer]}>
-        {[1, 2, 3, 4].map((it, id) => {
-          return (
+    <Pressable
+      onPress={() => {
+        navigation.navigate("DoctorsDetails", { doctor_id: doctor.id });
+      }}
+    >
+      <Card style={[styles.card]}>
+        <Image
+          source={{
+            uri: doctor.user.image,
+          }}
+          style={[styles.spacing, styles.doctorImage]}
+        />
+        <Text style={[styles.spacing, styles.doctorName]}>{doctor.name}</Text>
+        <Text style={[styles.spacing, styles.speciality]}>
+          {doctor.speciality}
+        </Text>
+        <View style={[styles.spacing, styles.starContainer]}>
+          {stars.map((it, id) => {
+            return (
+              <Icon
+                key={id}
+                style={[styles.star]}
+                name="star"
+                size={20}
+                color="#f6d060"
+              />
+            );
+          })}
+          {halfStar && (
             <Icon
-              key={id}
               style={[styles.star]}
-              name="star"
+              name="star-half"
               size={20}
               color="#f6d060"
             />
-          );
-        })}
-
-        <Icon
-          style={[styles.star]}
-          name="star-half"
-          size={20}
-          color="#f6d060"
-        />
-      </View>
-    </Card>
+          )}
+        </View>
+      </Card>
+    </Pressable>
   );
 };
 

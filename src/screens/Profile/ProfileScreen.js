@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   SafeAreaView,
@@ -12,6 +12,9 @@ import { useNavigation } from "@react-navigation/native";
 import { Avatar } from "react-native-elements";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Button from "../../components/common/basic/Button";
+import { baseUrl } from "../../../apiUrl";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from "moment";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -23,6 +26,26 @@ const ProfileScreen = () => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    (async function () {
+      const token = await AsyncStorage.getItem("token");
+      const response = await fetch(`http://${baseUrl()}/api/me`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+          "content-type": "application/json",
+        },
+      });
+      const res = await response.json();
+      setUser(res);
+    })();
+  });
+
+  if (!user) {
+    return <Text>Loading</Text>;
+  }
 
   return (
     <LinearGradient
@@ -49,7 +72,7 @@ const ProfileScreen = () => {
             }}
           />
         </TouchableOpacity> */}
-        <View style={{ alignSelf: "center" }}>
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
           <Avatar
             source={require("../../../assets/images/profile/profilepic.jpg")}
             size={109}
@@ -57,7 +80,7 @@ const ProfileScreen = () => {
             showEditButton
             activeOpacity={0.7}
             containerStyle={{
-              marginRight: 10,
+              // marginRight: 10,
               marginBottom: 20,
             }}
           />
@@ -66,12 +89,12 @@ const ProfileScreen = () => {
             style={[
               styles.title,
               {
-                alignSelf: "flex-start",
+                textAlign: "center",
                 margin: 10,
               },
             ]}
           >
-            John Doe
+            {user.name}
           </Text>
         </View>
 
@@ -82,18 +105,17 @@ const ProfileScreen = () => {
               style={styles.logo}
             />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              Tunis, Tunisia
+              {moment(user.created_at).format("hh:mm A DD/MM/YYYY")}
             </Text>
           </View>
-          <View style={styles.row}>
+          {/* <View style={styles.row}>
             <Image
               source={require("../../../assets/images/profile/phone.png")}
               style={styles.logo}
             />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              +91-900000009
             </Text>
-          </View>
+          </View> */}
 
           <View style={styles.row}>
             <Image
@@ -101,12 +123,12 @@ const ProfileScreen = () => {
               style={styles.logo}
             />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              john_doe@email.com
+              {user.email}
             </Text>
           </View>
         </View>
 
-        <Button title={"History"} onPress={toggleModal} />
+        {/* <Button title={"History"} onPress={toggleModal} /> */}
 
         <Modal
           animationOut

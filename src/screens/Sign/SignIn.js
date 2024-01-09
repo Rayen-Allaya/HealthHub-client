@@ -39,7 +39,7 @@ const SignIn = () => {
     });
     const res = await response.json();
     const token = res.token;
-
+    console.log(res);
     await AsyncStorage.setItem("token", token);
     navigation.navigate("Home");
     setToken(token);

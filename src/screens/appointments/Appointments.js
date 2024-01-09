@@ -17,6 +17,7 @@ const Appointments = () => {
         },
       });
       const res = await response.json();
+      // console.log(res);
       setAppointments(res);
     })();
   }, []);

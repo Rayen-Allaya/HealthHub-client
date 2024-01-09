@@ -1,6 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-import { StyleSheet } from "react-native";
+import { LogBox, StyleSheet } from "react-native";
 import HomeScreen from "./src/screens/Home/HomeScreen";
 import { DoctorsListScreen } from "./src/screens/Doctors/DoctorsListScreen";
 import SearchButton from "./src/components/doctorsList/SearchButton";
@@ -18,11 +18,16 @@ import ProfileScreen from "./src/screens/Profile/ProfileScreen";
 import Appointments from "./src/screens/appointments/Appointments";
 import AppointmentsHistory from "./src/screens/appointments/AppointmentsHistory";
 import Successful from "./src/screens/Successful";
+import HealthNews from "./src/screens/HealthNews";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
+  console.disableYellowBox = true;
+  LogBox.ignoreLogs(["Warning: ..."]); //Hide warnings
+
+  LogBox.ignoreAllLogs();
   const [token, setToken] = useState("");
   useEffect(() => {
     (async function () {
@@ -49,6 +54,11 @@ export default function App() {
           name="Find Doctors"
           component={DoctorsListScreen}
           options={{ headerRight: SearchButton }}
+        />
+        <Drawer.Screen
+          name="Health News"
+          component={HealthNews}
+          options={{ drawerItemStyle: { height: 50 } }}
         />
 
         <Drawer.Screen
